@@ -1,5 +1,14 @@
-// Assignment code here
+import { 
+  showSpecialCharacterPrompts, 
+  getPasswordSpecialCharacters
+} from "./prompts.js";
 
+// Assignment code here
+const generatePassword = () => {
+  showSpecialCharacterPrompts();
+
+
+}
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
