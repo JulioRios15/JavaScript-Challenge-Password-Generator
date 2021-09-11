@@ -1,11 +1,14 @@
 import { 
   showSpecialCharacterPrompts, 
-  getPasswordSpecialCharacters
+  getPasswordSpecialCharacters,
+  showPasswordLengthPrompt,
+  getPasswordLength
 } from "./prompts.js";
 
 // Assignment code here
 const generatePassword = () => {
-  showSpecialCharacterPrompts();
+  //showSpecialCharacterPrompts();
+  showPasswordLengthPrompt();
 
 
 }

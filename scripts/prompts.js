@@ -1,3 +1,5 @@
+/*------------------------------SpecialCharacters Prompt---------------------------------------- */
+
 // special character to include in the password generator
 let specialCharacters = "!@#";
 
@@ -32,10 +34,27 @@ const showSpecialCharacterPrompt = (promptText) => {
   let prompt = prompt(promptText);
 
   if(prompt === "Y" || prompt === "y" || prompt === "N" || prompt === "n"|| prompt == null){
-    return prompt;
+      return prompt;
   } else{
-    confirm("please answer Y or N");
-    showSpecialCharacterPrompt(promptText);
+      confirm("please answer Y or N");
+      showSpecialCharacterPrompt(promptText);
+  }
+}
+
+/*------------------------Password Prompt------------------------------------------------------- */
+let passwordLength;
+
+export const getPasswordLength = () => passwordLength;
+
+export const showPasswordLengthPrompt = () => {
+  let p = prompt('Password Length');
+
+  //if value entered is a number
+  if(!isNaN(p) && parseInt(p) >= 8 && parseInt(p) <= 128){
+    console.log("number");
+  } else{
+    confirm("please enter a valid number between 8-128");
+    showPasswordLengthPrompt();
   }
 }
 
