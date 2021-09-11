@@ -27,7 +27,7 @@ export const showSpecialCharacterPrompts = () => {
 }
 
 /*------------------------Password Prompt------------------------------------------------------- */
-let passwordLength;
+let passwordLength = 0;
 
 export const getPasswordLength = () => passwordLength;
 
@@ -36,7 +36,7 @@ export const showPasswordLengthPrompt = () => {
 
   //if value entered is a number
   if(!isNaN(p) && parseInt(p) >= 8 && parseInt(p) <= 128){
-
+      passwordLength = parseInt(p);
   } else{
     confirm("please enter a valid number between 8-128");
     showPasswordLengthPrompt();
@@ -47,7 +47,7 @@ export const showPasswordLengthPrompt = () => {
 /*------------------------Character Types Prompt------------------------------------------------ */
 
 let characterTypes = [
-  {required: false, name: "lowecase"},
+  {required: false, name: "lowercase"},
   {required: false, name: "uppercase"},
   {required: false, name: "numeric"},
   {required: false, name: "special characters"}
@@ -55,22 +55,37 @@ let characterTypes = [
 
 export const getPasswordCharTypes = () => characterTypes;
 
-export const showCharacterTypesPrompts = () => {
+// returns true if at least one of the charater types its true
+const characterTypesValid = () => {
 
-  
+  for (let i = 0; i < characterTypes.length; i++) {
+    if(characterTypes[i].required ===true) return true;   
+  }
+
+  return false;
+}
+
+export const showCharacterTypesPrompts = () => {
 
   characterTypes.map((item) => {
     const promptText = `Do you which to inclide ${item.name} values? Y or N`;
     const promptAnswer = showYesOrNoPrompt(promptText);
 
-    if(promptAnswer === "Y" || promptAnswer === "y"){
-        item.required = true;
-    } else if(promptAnswer === null){
+    if(promptAnswer === "Y" || promptAnswer === "y"){ 
+      item.required = true;
 
+      if(item.name === "special characters"){
+        let c = confirm('Do you wich to include all special characters?');
+        (c) ? passwordSpecialCharacters = specialCharacters : showSpecialCharacterPrompts(); 
+      }
     }
   });
 
-  console.log(characterTypes);
+  // if we didnt select any char types, run the promps again
+  if(!characterTypesValid()){
+    confirm("Please select at least on Character Type");
+    showSpecialCharacterPrompts();
+  }
 }
 
 /*---------------------------General------------------------------------------------------------*/ 
