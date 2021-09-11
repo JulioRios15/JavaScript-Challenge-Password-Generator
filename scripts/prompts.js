@@ -1,7 +1,7 @@
 /*------------------------------SpecialCharacters Prompt---------------------------------------- */
 
 // special character to include in the password generator
-let specialCharacters = "!@#";
+let specialCharacters = "!@#$%^&*()";
 
 // set after special characters promps are runned
 let passwordSpecialCharacters;
@@ -16,7 +16,7 @@ export const showSpecialCharacterPrompts = () => {
 
   for (let i = 0; i < specialCharacters.length; i++) {
     const promptText = `Do you which to include "${specialCharacters.charAt(i)}"  Y or N`;
-    const promptAnswer = showSpecialCharacterPrompt(promptText);
+    const promptAnswer = showYesOrNoPrompt(promptText);
     
     if(promptAnswer === "Y" || promptAnswer === "y"){
       chars = chars.concat(specialCharacters.charAt(i));
@@ -26,35 +26,66 @@ export const showSpecialCharacterPrompts = () => {
   passwordSpecialCharacters = chars;
 }
 
-/*
-*Show prompt and return answer "Y or N"
-*/
-const showSpecialCharacterPrompt = (promptText) => {
-  
-  let prompt = prompt(promptText);
-
-  if(prompt === "Y" || prompt === "y" || prompt === "N" || prompt === "n"|| prompt == null){
-      return prompt;
-  } else{
-      confirm("please answer Y or N");
-      showSpecialCharacterPrompt(promptText);
-  }
-}
-
 /*------------------------Password Prompt------------------------------------------------------- */
 let passwordLength;
 
 export const getPasswordLength = () => passwordLength;
 
 export const showPasswordLengthPrompt = () => {
-  let p = prompt('Password Length');
+  let p = prompt('Password Length (8-128)');
 
   //if value entered is a number
   if(!isNaN(p) && parseInt(p) >= 8 && parseInt(p) <= 128){
-    console.log("number");
+
   } else{
     confirm("please enter a valid number between 8-128");
     showPasswordLengthPrompt();
+  }
+
+}
+
+/*------------------------Character Types Prompt------------------------------------------------ */
+
+let characterTypes = [
+  {required: false, name: "lowecase"},
+  {required: false, name: "uppercase"},
+  {required: false, name: "numeric"},
+  {required: false, name: "special characters"}
+];
+
+export const getPasswordCharTypes = () => characterTypes;
+
+export const showCharacterTypesPrompts = () => {
+
+  
+
+  characterTypes.map((item) => {
+    const promptText = `Do you which to inclide ${item.name} values? Y or N`;
+    const promptAnswer = showYesOrNoPrompt(promptText);
+
+    if(promptAnswer === "Y" || promptAnswer === "y"){
+        item.required = true;
+    } else if(promptAnswer === null){
+
+    }
+  });
+
+  console.log(characterTypes);
+}
+
+/*---------------------------General------------------------------------------------------------*/ 
+/*
+*Show a general prompt and return answer "Y or N"
+*/
+const showYesOrNoPrompt = (promptText) => {
+  
+  let p = prompt(promptText);
+
+  if(p === "Y" || p === "y" || p === "N" || p === "n"|| p == null){
+      return p;
+  } else{
+      confirm("please answer Y or N");
+      showYesOrNoPrompt(promptText);
   }
 }
 
